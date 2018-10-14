@@ -9,6 +9,7 @@ import CategoryScreen from './category/category'
 import FindXScreen from "./findX/findX";
 import ShoppingCartScreen from "./shopping-cart/ShoppingCart";
 
+
 const RootNavigator = createBottomTabNavigator(
     {
         Home:{

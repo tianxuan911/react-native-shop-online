@@ -1,60 +1,41 @@
 import React from 'react'
-import {View,Button,Text,Platform,TextInput,ScrollView} from 'react-native'
+import {View,Button,Text,Platform,TextInput,Image,FlatList,StyleSheet,SectionList} from 'react-native'
 import {createStackNavigator} from 'react-navigation'
 import Icon from 'react-native-vector-icons/Ionicons'
-import SearchBar from 'react-native-search-bar'
-import GoodsScreen from "../common/goods";
+import GoodsScreen from "../common/goods"
+import GoodsList from "./goods-list"
+import Swiper from "./swiper"
+import Channel from "./channel"
 
 class HomeScreen extends React.Component{
 
-    // static navigationOptions = ({navigation,screenProps}) => ({
-    //     headerTitle:navigation.state.params?navigation.state.params.headerTitle:'Test2',
-    //     tabBarLabel:navigation.state.params?navigation.state.params.tabBarLabel:'Test2',
-    //     headerStyle:{
-    //         backgroundColor:navigation.state.params?navigation.state.params.navigationBackGroundColor:'rgba(255, 255 ,255, 0)',
-    //     },
-    //     headerLeft:(
-    //         <View style={{
-    //             flexDirection:'row',
-    //             marginLeft:10,
-    //             marginRight:5,
-    //             width:200,
-    //             height:20,
-    //             backgroundColor:'rgba(31,35,32,0.4)',
-    //             borderRadius: 7,
-    //         }}>
-    //             <Icon name={'md-locate'} size={15} style={{marginLeft:6,marginTop:2}} color={'white'}/>
-    //             <Text style={{color:'white',marginTop:1.5,marginRight:2}}>{'Test2'}</Text>
-    //         </View>
-    //     ),
-    //     headerRight:(
-    //         <View style={{
-    //             flexDirection:'row',
-    //             backgroundColor:'white',
-    //             borderRadius: 7,
-    //             marginRight:10,
-    //             height:20,
-    //             // width:deviceWidth / 2 -10,
-    //         }}>
-    //             <Icon name={'md-search'} size={12} color={'black'} style={{
-    //                 marginTop:3,
-    //                 marginLeft:5,
-    //             }}></Icon>
-    //             <TextInput
-    //                 style={{
-    //                     fontSize:13,
-    //                     marginLeft:3,
-    //                 }}
-    //                 placeholder={'搜索所有商品'}
-    //             />
-    //         </View>
-    //     ),
-    // })
+    //渲染工具栏
+    static navigationOptions=({navigation})=>{return HomeScreen.renderSearchBar(navigation)}
+    render() {
+        return(
+            <View style={styles.container}>
+                <SectionList
+                    style={styles.sectionContainer}
+                    renderItem={({ item, index, section }) => <Text key={index}>{item}</Text>}
+                    renderSectionHeader={({ section: { title } }) => {
+                        if (title)
+                            return <Text style={{fontWeight: "bold",textAlign: "center",backgroundColor:'gray'}}>{title}</Text>
+                    }}
+                    sections={[
+                        { data: [""] ,renderItem: ()=><Swiper/>},
+                        { data: [""] ,renderItem: ()=><Channel/>},
+                        { title:"为您推荐",data: ["item5", "item6"],renderItem: ()=><GoodsList/> }
+                    ]}
+                    keyExtractor={(item, index) => item + index}
+                />
+            </View>
+        )
+    }
 
-    static navigationOptions=({navigation})=>{
+    static renderSearchBar(navigation) {
         return {
             headerTransparent:true,
-            headerBackground:<View style={{flex:1,backgroundColor:"'rgba(255,255,255,0.5)'"}}/>,
+            headerBackground:<View style={{flex:1,backgroundColor:"'rgba(255,255,255,0)'"}}/>,
             headerTintColor:'#fdd',
             headerTitleContainerStyle:{justifyContent:"center",alignItems:'center',},
             headerTitle:(
@@ -93,46 +74,13 @@ class HomeScreen extends React.Component{
                     backgroundColor:'rgba(128, 138 ,135, 0.3)',
                     borderRadius: 100,
                 }}>
-                <Icon style={{}} size={25} name={`${Platform.OS==='ios'?'ios':'md'}-qr-scanner`} onPress={()=>alert('sanner')}/>
+                    <Icon style={{}} size={25} name={`${Platform.OS==='ios'?'ios':'md'}-qr-scanner`} onPress={()=>alert('sanner')}/>
                 </View>
             ),
         }
     }
-    render(){
-        return (
 
-            <ScrollView contentContainerStyle={{}}>
-                <Text>首页</Text>
-                <Button onPress={()=>this.props.navigation.navigate('Goods')} title="商品详情" />
-                <Text>首页</Text>
-                <Button onPress={()=>this.props.navigation.navigate('Goods')} title="商品详情" />
-                <Text>首页</Text>
-                <Button onPress={()=>this.props.navigation.navigate('Goods')} title="商品详情" />
-                <Text>首页</Text>
-                <Button onPress={()=>this.props.navigation.navigate('Goods')} title="商品详情" />
-                <Text>首页</Text>
-                <Button onPress={()=>this.props.navigation.navigate('Goods')} title="商品详情" />
-                <Text>首页</Text>
-                <Button onPress={()=>this.props.navigation.navigate('Goods')} title="商品详情" />
-                <Text>首页</Text>
-                <Button onPress={()=>this.props.navigation.navigate('Goods')} title="商品详情" />
-                <Text>首页</Text>
-                <Button onPress={()=>this.props.navigation.navigate('Goods')} title="商品详情" />
-                <Text>首页</Text>
-                <Button onPress={()=>this.props.navigation.navigate('Goods')} title="商品详情" />
-                <Text>首页</Text>
-                <Button onPress={()=>this.props.navigation.navigate('Goods')} title="商品详情" />
-                <Text>首页</Text>
-                <Button onPress={()=>this.props.navigation.navigate('Goods')} title="商品详情" />
-
-            </ScrollView>
-        )
-    }
-    componentDidMount() {
-        console.log('ddddddd');
-    }
 }
-
 const HomeStackNavigator = createStackNavigator(
     {
         Home:HomeScreen,
@@ -147,3 +95,19 @@ HomeStackNavigator.navigationOptions={
 }
 
 export default HomeStackNavigator;
+
+const styles=StyleSheet.create({
+    container:{
+        flex: 1,
+        flexDirection: "column",
+        justifyContent: "center",
+        // alignItems: "center",
+        backgroundColor: "red"
+    },
+    sectionContainer:{
+        flex: 1,
+    },
+
+
+})
+

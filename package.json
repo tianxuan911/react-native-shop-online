@@ -7,9 +7,13 @@
     "test": "jest"
   },
   "dependencies": {
+    "moment": "^2.22.2",
     "react": "16.5.0",
     "react-native": "0.57.0",
+    "react-native-md5": "^1.0.0",
     "react-native-search-bar": "^3.4.2",
+    "react-native-storage": "^0.2.3",
+    "react-native-swiper": "^1.5.13",
     "react-native-vector-icons": "^5.0.0",
     "react-navigation": "^2.16.0"
   },
